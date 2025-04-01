@@ -18,7 +18,7 @@ class SendSelectionCommand(commands.Cog):
         embed.add_field(name="⚠️ - Abus",
                         value="Merci de ne pas abuser des tickets",
                         inline=True)
-        embed.set_footer(text="OpenTicket")
+        embed.set_footer(text="OpenTicket", icon_url="https://github.com/simonchanay/OpenTicket/blob/main/statics/images/logo2.png?raw=true")
 
         await channel.send(embed=embed, view=DropdownView())
         await ctx.reply("La commande a bien été générée", ephemeral=True)    
