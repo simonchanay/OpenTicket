@@ -29,7 +29,7 @@ class HelpFormModal(discord.ui.Modal):
         await interaction.response.send_message(f'Thanks for your feedback, {self.name.value}! A mod is going to help you', 
                                                 ephemeral=True)
 
-    async def on_error(self, interaction: discord.Interaction, error: Exception) -> None:
+    async def on_error(self, interaction: discord.Interaction, error: Exception):
         await interaction.response.send_message('Oops! Something went wrong.', ephemeral=True)
         print(error)
 
