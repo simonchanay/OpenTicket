@@ -16,7 +16,7 @@ class OpenTicket(commands.Bot):
     async def on_ready(self):
         print("Bot is ready...")
         await bot.tree.sync()
-        print("Commands has been synchronized")
+        print("Commands have been synchronized")
 
 intents = discord.Intents.all()
 bot = OpenTicket(command_prefix="!", intents=intents)
