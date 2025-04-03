@@ -35,7 +35,7 @@ class TicketSelectionMenu(discord.ui.Select):
         super().__init__(placeholder="Select an option",max_values=1,min_values=1,options=options)
 
     async def callback(self, interaction: discord.Interaction):
-        hf = helpform.HelpFormModal(title="Modal", timeout=None)
+        hf = helpform.HelpFormModalType1(title="Modal", timeout=None)
         await interaction.response.send_modal(hf)
         await interaction.channel.send(f'The id of the modal is {hf.id}')
 

@@ -1,5 +1,8 @@
 from discord.ext import commands
 import discord
+from datetime import datetime
+import cogs.commands.closeticket as closeticket
+
 
 class HelpForm(commands.Cog):
     def __init__(self, bot):
@@ -9,28 +12,40 @@ class HelpForm(commands.Cog):
     async def test(self, ctx: commands.Context):
         await ctx.send()
 
-class HelpFormModal(discord.ui.Modal):
-    name = discord.ui.TextInput(label=f"Here the subtitle you want", 
-                                placeholder="Short placeholder")
+class HelpFormModalType1(discord.ui.Modal):
+    reason = discord.ui.TextInput(label=f"Explain the reason of the ticket", 
+                                placeholder="")
     
-    feedback = discord.ui.TextInput(
-        label='What do you think of this new feature?',
+    problem = discord.ui.TextInput(
+        label='Explain your problem here',
         style=discord.TextStyle.long,
-        placeholder='Type your feedback here...',
-        required=False,
+        placeholder='My problem is...',
+        required=True,
         max_length=300,
     )
     async def on_submit(self, interaction: discord.Interaction):
         #TO DO : protect the server from massive creation of rooms by a single user
         category = discord.utils.get(interaction.guild.categories, id=1356718971331547268)
-        interaction.guild.create_text_channel(category=category, name=str(self.id))
-        tc = discord.utils.get(interaction.guild.text_channels, name=self.id)
-        await tc.send(content=f"{self.name.value}")
-        await interaction.response.send_message(f'Thanks for your feedback, {self.name.value}! A mod is going to help you', 
+        tc = await interaction.guild.create_text_channel(category=category, name=str(self.id))
+        await tc.set_permissions(target=interaction.user, read_messages=True, view_channel=True)
+        closeButton = closeticket.CloseButton(timeout = None, channel=tc)
+
+        embed = discord.Embed(title=f"Ticket of {interaction.user.display_name}",
+                      description=f"**Reason :**\n{self.reason}\n\n**Description :**\n{self.problem}\n\n*A moderator will help you. Please wait before sending a new request !*\n||ID : {self.id}||",
+                      colour=0x00b0f4,
+                      timestamp=datetime.now())
+
+        embed.set_author(name="Ticket")
+
+        embed.set_footer(text="OpenTicket",
+                        icon_url="https://github.com/simonchanay/OpenTicket/blob/main/statics/images/logo2.png")
+
+        await tc.send(embed=embed, view=closeButton)
+        await interaction.response.send_message(f'Thanks for your feedback, {interaction.user.display_name}! A mod is going to help you', 
                                                 ephemeral=True)
 
     async def on_error(self, interaction: discord.Interaction, error: Exception):
-        await interaction.response.send_message('Oops! Something went wrong.', ephemeral=True)
+        await interaction.response.send_message('Something went wrong.', ephemeral=True)
         print(error)
 
 
