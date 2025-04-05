@@ -31,7 +31,7 @@ class HelpFormModalType1(discord.ui.Modal):
         ticket_category = discord.utils.get(interaction.guild.categories, id=ticket_category_id)
         tc = await interaction.guild.create_text_channel(category=ticket_category, name=str(self.id))
         await tc.set_permissions(target=interaction.user, read_messages=True, view_channel=True)
-        close_button = closeticket.CloseButton(timeout = None, channel=tc)
+        close_button = closeticket.CloseButton(timeout = None, channel=tc, member=interaction.user)
 
         embed = discord.Embed(title=f"Ticket of {interaction.user.display_name}",
                       description=f"**Reason :**\n{self.reason}\n\n**Description :**\n{self.problem}\n\n*A moderator will help you. Please wait before sending a new request !*\n||ID : {self.id}||",

@@ -3,7 +3,6 @@ import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 
-
 load_dotenv(dotenv_path=".config")
 token = os.getenv("TOKEN")
 

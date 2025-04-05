@@ -2,6 +2,7 @@ from discord.ext import commands
 import discord
 from datetime import datetime
 import cogs.commands.helpform as helpform
+import cogs.user_list as user_list
 
 class SendSelectionCommand(commands.Cog):
     def __init__(self, bot):
@@ -34,9 +35,12 @@ class TicketSelectionMenu(discord.ui.Select):
         super().__init__(placeholder="Select an option",max_values=1,min_values=1,options=options)
 
     async def callback(self, interaction: discord.Interaction):
+        if user_list.UserList().is_user_in_user_list(interaction.user):
+            await interaction.response.send_message("You have already opened a ticket.", ephemeral=True)
+            return
+        user_list.UserList().append_user(interaction.user)
         hf = helpform.HelpFormModalType1(title="Modal", timeout=None)
         await interaction.response.send_modal(hf)
-
 
 class DropdownView(discord.ui.View):
     def __init__(self):

@@ -1,7 +1,7 @@
 from discord.ext import commands
 import discord
 from config_loader import get_config
-
+import cogs.user_list as user_list
 
 class CloseTicket(commands.Cog):
     def __init__(self, bot):
@@ -25,8 +25,9 @@ class CloseTicket(commands.Cog):
             await channel.delete()
 
 class CloseButton(discord.ui.View):
-    def __init__(self, *, timeout=None, channel: discord.TextChannel):
+    def __init__(self, *, timeout=None, channel: discord.TextChannel, member : discord.Member):
         self.channel = channel
+        self.member = member
         super().__init__(timeout=timeout)
 
     @discord.ui.button(label="Close Ticket",style=discord.ButtonStyle.red ,emoji="🎁")
@@ -43,6 +44,7 @@ class CloseButton(discord.ui.View):
             await interaction.response.send_message("Something went wrong !", ephemeral=True)
             return
         await self.channel.delete()
+        user_list.UserList().remove_user_from_user_list(user=self.member)
 
             
 async def setup(bot: commands.Bot):
