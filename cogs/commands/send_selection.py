@@ -8,6 +8,7 @@ class SendSelectionCommand(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    @commands.has_permissions(manage_guild = True)
     @commands.hybrid_command(name="sendselection")
     async def sendselection(self, ctx: commands.Context, channel : discord.TextChannel):
         embed = discord.Embed(title="Tickets",
