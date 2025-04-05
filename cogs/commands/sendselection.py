@@ -7,23 +7,22 @@ class SendSelectionCommand(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    "Send the message that allows the user to select the category of help they need"
     @commands.hybrid_command(name="sendselection")
-    async def sendcommand(self, ctx: commands.Context, channel : discord.TextChannel):
-        #TO DO : Add a link to the logo
+    async def sendselection(self, ctx: commands.Context, channel : discord.TextChannel):
         embed = discord.Embed(title="Tickets",
                       description="To open a ticket for support, please select the category from the ones offered.\n```\n1 - Option 1\n2 - Option 2\n3 - Option 3\n```\n**A moderator will come and help you**",
                       colour=0xe66100,
                       timestamp=datetime.now())
         embed.set_author(name="OpenTicket",
-                        url="https://google.com")
+                        url="https://github.com/simonchanay/OpenTicket/blob/main/statics/images/logo2.png?raw=true")
         embed.add_field(name="⚠️ - Abuse",
                         value="Please do not abuse tickets.",
                         inline=True)
         embed.set_footer(text="OpenTicket", icon_url="https://github.com/simonchanay/OpenTicket/blob/main/statics/images/logo2.png?raw=true")
 
         await channel.send(embed=embed, view=DropdownView())
-        await ctx.reply("La commande a bien été générée", ephemeral=True)    
+        await ctx.reply("The selection section has been created successfully.", ephemeral=True)    
+
 
 class TicketSelectionMenu(discord.ui.Select):
     def __init__(self):
@@ -37,7 +36,7 @@ class TicketSelectionMenu(discord.ui.Select):
     async def callback(self, interaction: discord.Interaction):
         hf = helpform.HelpFormModalType1(title="Modal", timeout=None)
         await interaction.response.send_modal(hf)
-        await interaction.channel.send(f'The id of the modal is {hf.id}')
+
 
 class DropdownView(discord.ui.View):
     def __init__(self):
