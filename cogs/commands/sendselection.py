@@ -35,10 +35,11 @@ class TicketSelectionMenu(discord.ui.Select):
         super().__init__(placeholder="Select an option",max_values=1,min_values=1,options=options)
 
     async def callback(self, interaction: discord.Interaction):
-        if user_list.UserList().is_user_in_user_list(interaction.user):
+        if user_list.UserList().is_user_in_user_list(interaction.user) and user_list.UserList().get_counter_value() <= 50:
             await interaction.response.send_message("You have already opened a ticket.", ephemeral=True)
             return
         user_list.UserList().append_user(interaction.user)
+        user_list.UserList().increment_counter()
         hf = helpform.HelpFormModalType1(title="Modal", timeout=None)
         await interaction.response.send_modal(hf)
 

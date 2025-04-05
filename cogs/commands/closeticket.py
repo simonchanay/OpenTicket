@@ -45,6 +45,7 @@ class CloseButton(discord.ui.View):
             return
         await self.channel.delete()
         user_list.UserList().remove_user_from_user_list(user=self.member)
+        user_list.UserList().decrement_counter()
 
             
 async def setup(bot: commands.Bot):
