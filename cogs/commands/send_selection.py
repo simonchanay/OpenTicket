@@ -1,7 +1,7 @@
 from discord.ext import commands
 import discord
 from datetime import datetime
-import cogs.commands.helpform as helpform
+import cogs.commands.help_form as help_form
 import cogs.user_list as user_list
 
 class SendSelectionCommand(commands.Cog):
@@ -40,7 +40,7 @@ class TicketSelectionMenu(discord.ui.Select):
             return
         user_list.UserList().append_user(interaction.user)
         user_list.UserList().increment_counter()
-        hf = helpform.HelpFormModalType1(title="Modal", timeout=None)
+        hf = help_form.HelpFormModalType1(title="Ticket", timeout=None)
         await interaction.response.send_modal(hf)
 
 class DropdownView(discord.ui.View):

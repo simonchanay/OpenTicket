@@ -1,17 +1,13 @@
 from discord.ext import commands
 import discord
 from datetime import datetime
-import cogs.commands.closeticket as closeticket
+import cogs.commands.close_ticket as close_ticket
 from config_loader import get_config
 
 
 class HelpForm(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-
-    @commands.hybrid_command("test")
-    async def test(self, ctx: commands.Context):
-        await ctx.send()
 
 class HelpFormModalType1(discord.ui.Modal):
     reason = discord.ui.TextInput(label=f"Explain the reason of the ticket", 
@@ -26,12 +22,11 @@ class HelpFormModalType1(discord.ui.Modal):
     )
 
     async def on_submit(self, interaction: discord.Interaction):
-        #TO DO : protect the server from massive creation of rooms by a single user
         ticket_category_id = int(get_config()["TICKET_CATEGROY_ID"])
         ticket_category = discord.utils.get(interaction.guild.categories, id=ticket_category_id)
-        tc = await interaction.guild.create_text_channel(category=ticket_category, name=str(self.id))
+        tc = await interaction.guild.create_text_channel(category=ticket_category, name=f"ticket-{interaction.user.name}")
         await tc.set_permissions(target=interaction.user, read_messages=True, view_channel=True)
-        close_button = closeticket.CloseButton(timeout = None, channel=tc, member=interaction.user)
+        close_button = close_ticket.CloseButton(timeout = None, channel=tc, member=interaction.user)
 
         embed = discord.Embed(title=f"Ticket of {interaction.user.display_name}",
                       description=f"**Reason :**\n{self.reason}\n\n**Description :**\n{self.problem}\n\n*A moderator will help you. Please wait before sending a new request !*\n||ID : {self.id}||",

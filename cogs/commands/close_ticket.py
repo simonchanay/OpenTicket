@@ -23,6 +23,9 @@ class CloseTicket(commands.Cog):
                 ctx.send("Something went wrong.")
                 return
             await channel.delete()
+            user_list.UserList().remove_user_from_user_list(user=self.member)
+            user_list.UserList().decrement_counter()
+
 
 class CloseButton(discord.ui.View):
     def __init__(self, *, timeout=None, channel: discord.TextChannel, member : discord.Member):
@@ -30,7 +33,7 @@ class CloseButton(discord.ui.View):
         self.member = member
         super().__init__(timeout=timeout)
 
-    @discord.ui.button(label="Close Ticket",style=discord.ButtonStyle.red ,emoji="🎁")
+    @discord.ui.button(label="Close Ticket",style=discord.ButtonStyle.red ,emoji="❌")
     async def button_callback(self, interaction:discord.Interaction, button:discord.ui.Button):
         if not interaction.user.guild_permissions.manage_guild:
             await interaction.response.send_message("You can't close a ticket.", ephemeral=True)
