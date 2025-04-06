@@ -23,8 +23,8 @@ Installing the Discord bot:
 - In the config.json file, replace the IDs of the two Discord categories with your own
 ## Usage/Examples
 
-- To generate the help category selection menu, issue the command `/selection <room name>` (Administrator permissions)
-- To close a ticket, click the red button or run the command `/closeticket <name of the ticket>
+- To generate the help category selection menu, issue the command `/sendselection <room name>` (Administrator permissions)
+- To close a ticket, click the red button or run the command `/closeticket <name of the ticket>` (Administrator permissions)
 
 
 ## FAQ
