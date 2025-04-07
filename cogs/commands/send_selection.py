@@ -39,8 +39,6 @@ class TicketSelectionMenu(discord.ui.Select):
         if user_list.UserList().is_user_in_user_list(interaction.user) and user_list.UserList().get_counter_value() <= 50:
             await interaction.response.send_message("You have already opened a ticket.", ephemeral=True)
             return
-        user_list.UserList().append_user(interaction.user)
-        user_list.UserList().increment_counter()
         hf = help_form.HelpFormModalType1(title="Ticket", timeout=None)
         await interaction.response.send_modal(hf)
 

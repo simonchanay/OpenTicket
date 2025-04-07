@@ -3,7 +3,7 @@ import discord
 from datetime import datetime
 import cogs.commands.close_ticket as close_ticket
 from config_loader import get_config
-
+import cogs.user_list as user_list
 
 class HelpForm(commands.Cog):
     def __init__(self, bot):
@@ -38,6 +38,8 @@ class HelpFormModalType1(discord.ui.Modal):
         embed.set_footer(text="OpenTicket",
                         icon_url="https://github.com/simonchanay/OpenTicket/blob/main/statics/images/logo2.png")
 
+        user_list.UserList().append_user(interaction.user)
+        user_list.UserList().increment_counter()
         await tc.send(embed=embed, view=close_button)
         await interaction.response.send_message(f'Thanks for your feedback, {interaction.user.display_name}! A mod is going to help you', 
                                                 ephemeral=True)
