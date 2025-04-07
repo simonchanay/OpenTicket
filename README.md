@@ -18,13 +18,14 @@ Features:
 ## Installation
 
 Installing the Discord bot:
+- Download the project
 - Create a virtual environment
 - Create a .config file at the root level and add the line `TOKEN = "YourBotTokenHere"`
 - In the config.json file, replace the IDs of the two Discord categories with your own
 ## Usage/Examples
 
-- To generate the help category selection menu, issue the command `/sendselection <room name>` (Administrator permissions)
-- To close a ticket, click the red button or run the command `/closeticket <name of the ticket>` (Administrator permissions)
+- To generate the help category selection menu, issue the command `/sendselection <room name>` (Administrator permissions required)
+- To close a ticket, click the red button or run the command `/closeticket <name of the ticket>`(Administrator permissions required)
 
 
 ## FAQ
@@ -32,6 +33,13 @@ Installing the Discord bot:
 #### Can it be used on multiple different servers?
 
 For now no, it can only be used for one server!
+
+#### How does ticket archiving work?
+
+This feature is not implemented yet.
+
+
+
 
 
 ## Authors
